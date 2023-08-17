@@ -22,6 +22,7 @@ interface Pet {
 export const Map = ({ pets }: { pets: Array<Pet> }) => {
 
   const [isLoading, setIsLoading] = useState(false);
+  const [center, setCenter] = useState({ lat: 52.5200, lng: 13.4050 });
 
   const handleZoomChanged = () => {
     setIsLoading(true);
@@ -39,15 +40,20 @@ export const Map = ({ pets }: { pets: Array<Pet> }) => {
     <LoadScript googleMapsApiKey={google_api} >
       
       <GoogleMap
-      
+        options={{
+          gestureHandling: 'greedy',
+          disableDefaultUI: true,
+          streetViewControl: false,
+          mapTypeId:'terrain',
+      }}
         onZoomChanged={handleZoomChanged}
         mapContainerStyle={{
           width: '100%',
           height: '100vh'
         }}
-        center={{ lat: 52.5200, lng: 13.4050 }}
+        center={center}
         zoom={10}
-      >
+             >
       
       {isLoading ? <div className="absolute top z-50 w-full flex justify-center">
           <div className='bg-white px-3 py-1 rounded-xl mt-5'>Loading...</div>
