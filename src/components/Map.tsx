@@ -5,6 +5,7 @@ import ico from '../assets/ico.svg'
 import ico_field from '../assets/ico_filed.svg'
 import FavoriteButton from './FavoriteButton';
 import PriceButton from './PriceButton';
+import { useQuery } from 'react-query';
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
@@ -25,13 +26,18 @@ export interface Pet {
   }>
 }
 
-export const Map = ({ pets }: { pets: Array<Pet> }) => {
+export const Map = ({ pets, queryFunc }: { pets: Array<Pet>,  queryFunc:(query:{ location: string,radius: number,})=>void}) => {
+  useQuery("pets",()=> queryFunc );
+
   const [isLoading, setIsLoading] = useState(false);
 
   const [center] = useState({ lat: 52.5200, lng: 13.4050 });
 
+
+
   const handleZoomChanged = () => {
     setIsLoading(true);
+    queryFunc({location:JSON.stringify(center), radius:5})
     setTimeout(() => {
       setIsLoading(false);
     }, 1000); // Simulate loading for 1 second
@@ -104,10 +110,10 @@ export const Map = ({ pets }: { pets: Array<Pet> }) => {
                     className="w-full h-80 m-0 object-cover "
                   />
                 </div>
-                <div className='flex flex-row  rounded-t-[10px] bg-white absolute bottom-0 w-full h-20 pt-3 px-3 justify-between '>
+                <div className='flex flex-row  rounded-t-[10px] bg-white absolute bottom-0 w-full h-auto p-[16px] justify-between '>
                   <div className=''>
-                    <h2 className='font-semibold font-sans text-base'>{selectedPet.name}</h2>
-                    <p className='font-medium font-sans text-customGray text-sm'>{selectedPet.breed.name}</p>
+                    <h2 className="font-semibold font-['Poppins'] text-base mb-[6px]">{selectedPet.name}</h2>
+                    <p className="font-medium font-['Poppins'] text-customGray text-sm">{selectedPet.breed.name}</p>
                   </div>
                   <PriceButton price={selectedPet.price} pricingType={selectedPet.pricingType}/>
 

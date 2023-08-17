@@ -26,7 +26,7 @@ module.exports = {
         '175': '43.75rem',
       },
       fontFamily: {
-        'sans': ['Poppins']
+        'sans': ['Poppins',  ...defaultTheme.fontFamily.sans]
       },
     },
   },

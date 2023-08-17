@@ -1,11 +1,16 @@
 import React from 'react';
 import { Map, Pet } from './components/Map';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
+const queryClient = new QueryClient();
 
 const petsData: Array<Pet> = [
   {
     id: '1',
-    name: 'Lucy',
+    name: 'Buddy',
     breed: {
       name: 'Dog',
     },
@@ -15,7 +20,7 @@ const petsData: Array<Pet> = [
     images: [{
       id: '1',
       urls: {
-        card: 'https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg',
+        card: 'https://hips.hearstapps.com/hmg-prod/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=0.752xw:1.00xh;0.175xw,0&resize=1200:*',
       },
     }]
   },
@@ -23,11 +28,19 @@ const petsData: Array<Pet> = [
 ];
 
 function App() {
-  return (
 
-    <Map pets={petsData} />
+  const queryFunc = (query:{ location: string,radius: number}) =>{
+    return fetch('').then((response) => response.json())
+  }
+
+
+  return (
+    <QueryClientProvider client={queryClient}>
+
+     <Map pets={petsData} queryFunc={queryFunc} />
+    </QueryClientProvider>
 
   );
 }
 
-export default App;
+export default App

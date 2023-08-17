@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { useCallback } from "react";
 import HeartIcon  from "../assets/icons/HeartIcon";
-import { Pet } from "./Map";
 
 type Props = {
   data:any, onCreateFavorite?:(obg:any)=>void, onDeleteFavorite?:(obg:any)=>void, iconSize?:number, isWhite:boolean, className?:string
