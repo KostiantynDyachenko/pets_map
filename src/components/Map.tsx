@@ -22,7 +22,8 @@ interface Pet {
 export const Map = ({ pets }: { pets: Array<Pet> }) => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [center, setCenter] = useState({ lat: 52.5200, lng: 13.4050 });
+
+  const [center] = useState({ lat: 52.5200, lng: 13.4050 });
 
   const handleZoomChanged = () => {
     setIsLoading(true);
