@@ -3,14 +3,15 @@
 @tailwind utilities;
 
 .gm-style .gm-style-iw-c {
-  border-radius: 5px !important;
+  border-radius: 10px !important;
   padding: 0!important;
-  left: 3.5rem;
-  top:10rem;
+  left: 5rem;
+  top:20rem;
 }
 
 .gm-style .gm-style-iw-tc{
   display: none;
+
 }
 
 .gm-style .gm-style-iw-d{
@@ -18,6 +19,12 @@
   overflow: hidden !important;
 }
 
-.gm-style .gm-style-iw button:last-child{
+.gm-style-iw .gm-style-iw-c button{
   display: none!important;
+
+}
+
+.gm-ui-hover-effect {
+  display: none!important;
+
 }

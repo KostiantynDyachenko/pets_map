@@ -1,10 +1,13 @@
 import clsx from "clsx";
 import { useCallback } from "react";
-import { useMeQuery } from "../../api/users";
-import { HeartIcon } from "./icons";
+import HeartIcon  from "../assets/icons/HeartIcon";
+import { Pet } from "./Map";
 
-export default function FavoriteButton({ data, onCreateFavorite, onDeleteFavorite, iconSize = 15, isWhite, className }) {
-  const { data: meData } = useMeQuery()
+type Props = {
+  data:any, onCreateFavorite?:(obg:any)=>void, onDeleteFavorite?:(obg:any)=>void, iconSize?:number, isWhite:boolean, className?:string
+}
+
+export default function FavoriteButton({ data, onCreateFavorite, onDeleteFavorite, iconSize = 15, isWhite, className }:Props) {
 
   const handleFavoriteClick = useCallback(() => {
     if (data.isFavorite) {
@@ -14,10 +17,10 @@ export default function FavoriteButton({ data, onCreateFavorite, onDeleteFavorit
     }
   }, [data.isFavorite, data._id, onCreateFavorite, onDeleteFavorite])
 
-  return meData && (
+  return  (
     <button
       className={clsx(
-        "border border-gray-600/70 rounded-full p-2",
+        "block border border-gray-600/70 rounded-full p-2",
         { 'border-gray-600/70': !isWhite, 'border-white/40 bg-white-50/10': isWhite },
         className,
       )}

@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-import dollar from '../assets/CurrencyCircleDollar.png'
 import cross from '../assets/Line.png'
 import ico from '../assets/ico.svg'
 import ico_field from '../assets/ico_filed.svg'
+import FavoriteButton from './FavoriteButton';
+import PriceButton from './PriceButton';
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
@@ -25,18 +26,17 @@ export interface Pet {
 }
 
 export const Map = ({ pets }: { pets: Array<Pet> }) => {
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [center] = useState({ lat: 52.5200, lng: 13.4050 });
 
   const handleZoomChanged = () => {
     setIsLoading(true);
-    console.log('qwe')
     setTimeout(() => {
       setIsLoading(false);
     }, 1000); // Simulate loading for 1 second
   };
+
 
   const [selectedPet, setSelectedPet] = useState<Pet | null>()
 
@@ -66,14 +66,14 @@ export const Map = ({ pets }: { pets: Array<Pet> }) => {
           </div> : <div className='h-10 w-full' />}
 
 
-          {pets.map((pet: any) => (
+          {pets.map((pet: Pet) => (
             <Marker
               icon={{
                 url: pet.id === selectedPet?.id ? ico : ico_field,
                 scale: 7
               }}
               key={pet.id}
-              position={pet.position}
+              position={{ lat: pet.location[0], lng: pet.location[1] }}
               onClick={() => setSelectedPet(pet)}
             >
             </Marker>
@@ -87,30 +87,30 @@ export const Map = ({ pets }: { pets: Array<Pet> }) => {
               options={{}}
 
             >
-              <div className="bg-blue h-auto"
+              <div className="bg-blue h-80"
               >
 
-                <div className='h-auto w-44 high-specificity'>
+                <div className='h-auto w-64 high-specificity'>
                   <button onClick={() => setSelectedPet(null)} className='absolute bg-white bg-opacity-30 rounded-full top-1 left-1'>
                     <img src={cross} alt="" />
-
                   </button>
+                  <div className='absolute top-1 right-1'>
+                    <FavoriteButton data={selectedPet} isWhite={true}/>
+                  </div>
                   <img
                     src={selectedPet.images[0].urls.card}
                     alt={selectedPet.name}
-                    className="w-full h-40 m-0 object-cover "
+                    className="w-full h-80 m-0 object-cover "
                   />
                 </div>
-                <div className='flex flex-row  rounded-t-xl bg-white absolute bottom-0 w-full h-12 pt-3 px-3 justify-between '>
+                <div className='flex flex-row  rounded-t-[10px] bg-white absolute bottom-0 w-full h-20 pt-3 px-3 justify-between '>
                   <div className=''>
                     <h1 className='font-bold font-sans'>
                       {selectedPet.name}</h1>
                     <h2 className='font-sans'>{selectedPet.breed.name}</h2>
                   </div>
-                  <div className='bg-customGreen flex flex-row h-fit items-center px-2 border border-customGreenDark rounded-lg' >
-                    <img src={dollar} alt="d" className='h-5 mr-2' />
-                    <h1 className='font-bold font-sans'>{selectedPet.price}€</h1>
-                  </div>
+                  <PriceButton price={selectedPet.price} pricingType={selectedPet.pricingType}/>
+
                 </div>
 
               </div>

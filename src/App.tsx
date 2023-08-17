@@ -10,7 +10,7 @@ const petsData: Array<Pet> = [
       name: 'Dog',
     },
     price: 100,
-    pricingType: 'string',
+    pricingType: 'money',
     location: [ 52.5200, 13.4050],
     images: [{
       id: '1',
