@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import cross from '../assets/Line.svg'
 import ico from '../assets/ico.svg'
@@ -33,14 +33,60 @@ export const Map = ({ pets, queryFunc }: { pets: Array<Pet>,  queryFunc:(query:{
 
   const [center] = useState({ lat: 52.5200, lng: 13.4050 });
 
+  const [zoom, setZoom] = useState(14);
+  const mapRef = useRef(null);
+  const doubleClickTimeout = useRef(null);
+  const dragStartLat = useRef(null);
+  const prevLat = useRef(null);
+  const isDragging = useRef(false);
+
+  const handleDoubleClick = () => {
+        // @ts-ignore
+    clearTimeout(doubleClickTimeout.current);
+        // @ts-ignore
+    doubleClickTimeout.current = setTimeout(() => {
+      if (!isDragging.current) {
+        setZoom((prevZoom) => prevZoom + 1);
+      }
+    }, 300);
+  };
+
+  const handleDragStart = () => {
+    // @ts-ignore
+    const latLng = mapRef.current.getCenter();
+    dragStartLat.current = latLng.lat();
+    prevLat.current = latLng.lat();
+    isDragging.current = true;
+  };
+
+  const handleDrag = () => {
+    if (isDragging.current) {
+          // @ts-ignore
+      const latLng = mapRef.current.getCenter();
+          // @ts-ignore
+      const deltaY = prevLat.current - latLng.lat();
+
+      if (deltaY > 0) {
+        setZoom((prevZoom) => prevZoom + 1);
+      }
+
+      prevLat.current = latLng.lat();
+    }
+  };
+
+  const handleDragEnd = () => {
+    isDragging.current = false;
+    dragStartLat.current = null;
+    prevLat.current = null;
+  };
 
 
   const handleZoomChanged = () => {
-    setIsLoading(true);
-    queryFunc({location:JSON.stringify(center), radius:5})
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000); // Simulate loading for 1 second
+    // setIsLoading(true);
+    // queryFunc({location:JSON.stringify(center), radius:5})
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 1000); // Simulate loading for 1 second
   };
 
 
@@ -50,7 +96,6 @@ export const Map = ({ pets, queryFunc }: { pets: Array<Pet>,  queryFunc:(query:{
     <>
 
       <LoadScript googleMapsApiKey={google_api} >
-
         <GoogleMap
           options={{
             gestureHandling: 'greedy',
@@ -64,7 +109,13 @@ export const Map = ({ pets, queryFunc }: { pets: Array<Pet>,  queryFunc:(query:{
             height: '100vh'
           }}
           center={center}
-          zoom={10}
+          zoom={zoom}
+          onDblClick={()=>handleDoubleClick()}
+        onDragStart={handleDragStart}
+        onDrag={handleDrag}
+        onDragEnd={handleDragEnd}
+        ref={mapRef}
+      
         >
 
           {isLoading ? <div className="absolute top z-50 w-full flex justify-center">
@@ -128,4 +179,3 @@ export const Map = ({ pets, queryFunc }: { pets: Array<Pet>,  queryFunc:(query:{
     </>
   )
 }
-
