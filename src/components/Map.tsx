@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-import cross from '../assets/Line.png'
+import cross from '../assets/Line.svg'
 import ico from '../assets/ico.svg'
 import ico_field from '../assets/ico_filed.svg'
 import FavoriteButton from './FavoriteButton';
@@ -91,10 +91,11 @@ export const Map = ({ pets }: { pets: Array<Pet> }) => {
               >
 
                 <div className='h-auto w-64 high-specificity'>
-                  <button onClick={() => setSelectedPet(null)} className='absolute bg-white bg-opacity-30 rounded-full top-1 left-1'>
+                  <button onClick={() => setSelectedPet(null)} 
+                  className='absolute bg-white bg-opacity-30 rounded-full top-4 left-4 w-6 h-6  flex justify-center items-center '>
                     <img src={cross} alt="" />
                   </button>
-                  <div className='absolute top-1 right-1'>
+                  <div className='absolute  top-4 right-4'>
                     <FavoriteButton data={selectedPet} isWhite={true}/>
                   </div>
                   <img
@@ -105,9 +106,8 @@ export const Map = ({ pets }: { pets: Array<Pet> }) => {
                 </div>
                 <div className='flex flex-row  rounded-t-[10px] bg-white absolute bottom-0 w-full h-20 pt-3 px-3 justify-between '>
                   <div className=''>
-                    <h1 className='font-bold font-sans'>
-                      {selectedPet.name}</h1>
-                    <h2 className='font-sans'>{selectedPet.breed.name}</h2>
+                    <h2 className='font-semibold font-sans text-base'>{selectedPet.name}</h2>
+                    <p className='font-medium font-sans text-customGray text-sm'>{selectedPet.breed.name}</p>
                   </div>
                   <PriceButton price={selectedPet.price} pricingType={selectedPet.pricingType}/>
 

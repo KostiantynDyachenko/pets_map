@@ -15,6 +15,7 @@ module.exports = {
         subHeading: '#4A4658',
         customGreen: '#67BB8A33',
         customGreenDark: '#67BB8A',
+        customGray: '#777E90'
       },
       spacing: {
         '7.5': '1.875rem',
@@ -25,7 +26,7 @@ module.exports = {
         '175': '43.75rem',
       },
       fontFamily: {
-        'sans': ['Poppins', ...defaultTheme.fontFamily.sans]
+        'sans': ['Poppins']
       },
     },
   },

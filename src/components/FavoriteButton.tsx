@@ -7,7 +7,7 @@ type Props = {
   data:any, onCreateFavorite?:(obg:any)=>void, onDeleteFavorite?:(obg:any)=>void, iconSize?:number, isWhite:boolean, className?:string
 }
 
-export default function FavoriteButton({ data, onCreateFavorite, onDeleteFavorite, iconSize = 15, isWhite, className }:Props) {
+export default function FavoriteButton({ data, onCreateFavorite, onDeleteFavorite, iconSize = 12, isWhite, className }:Props) {
 
   const handleFavoriteClick = useCallback(() => {
     if (data.isFavorite) {
@@ -20,7 +20,7 @@ export default function FavoriteButton({ data, onCreateFavorite, onDeleteFavorit
   return  (
     <button
       className={clsx(
-        "block border border-gray-600/70 rounded-full p-2",
+        "block border border-gray-600/70 rounded-full p-[5px]",
         { 'border-gray-600/70': !isWhite, 'border-white/40 bg-white-50/10': isWhite },
         className,
       )}
