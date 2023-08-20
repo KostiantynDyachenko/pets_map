@@ -15,7 +15,10 @@ module.exports = {
         subHeading: '#4A4658',
         customGreen: '#67BB8A33',
         customGreenDark: '#67BB8A',
-        customGray: '#777E90'
+        customGray: '#777E90',
+        neutrals: '#23262F',
+        neutrals2: '#FCFCFD'
+
       },
       spacing: {
         '7.5': '1.875rem',
