@@ -5,7 +5,7 @@ import ico from '../assets/ico.svg'
 import ico_field from '../assets/ico_filed.svg'
 import FavoriteButton from './FavoriteButton';
 import PriceButton from './PriceButton';
-import {useQuery} from 'react-query';
+import {Button} from "./Button";
 
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
@@ -29,23 +29,15 @@ export interface Pet {
 
 export const Map = ({
                         pets,
-                        queryFunc
-                    }: { pets: Array<Pet>, queryFunc: (query: { location: string, radius: number, }) => void }) => {
-    useQuery("pets", () => queryFunc);
+                        useQuery
+                    }: { pets: Array<Pet>, useQuery: any }) => {
     const mapRef = useRef(null);
-
-    const [isLoading, setIsLoading] = useState(false);
     const [selectedPet, setSelectedPet] = useState<Pet | null>()
     const [zoom] = useState(14);
     const [center] = useState({lat: 52.5200, lng: 13.4050});
 
-    const handleZoomChanged = () => {
-        setIsLoading(true);
-        // queryFunc({location: JSON.stringify(center), radius: 5})
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000); // Simulate loading for 1 second
-    };
+    // @ts-ignore
+    const {isLoading} = useQuery(mapRef.current ? {location: mapRef.current.getCenter(), radius: 5} : {})
 
     const [click, setClick] = useState(false)
 
@@ -117,7 +109,6 @@ export const Map = ({
                         streetViewControl: false,
                         mapTypeId: 'terrain',
                     }}
-                    onZoomChanged={handleZoomChanged}
                     mapContainerStyle={{
                         width: '100%',
                         height: '100vh'
@@ -158,14 +149,17 @@ export const Map = ({
                         >
                             <div className="bg-blue h-80"
                             >
-
                                 <div className='h-auto w-64 high-specificity'>
                                     <button onClick={() => setSelectedPet(null)}
                                             className='absolute bg-white bg-opacity-30 rounded-full top-4 left-4 w-6 h-6  flex justify-center items-center '>
                                         <img src={cross} alt=""/>
                                     </button>
-                                    <div className='absolute  top-4 right-4'>
+                                    <div className='absolute  top-4 right-4 flex flex-col items-end'>
                                         <FavoriteButton data={selectedPet} isWhite={true}/>
+                                        <Button
+                                            className={'block bg-neutrals2 h-8 w-10 flex items-center justify-center mt-4 rounded'}>
+                                            <p className="font-bold font-['Poppins'] text-neutrals text-xs">BUY</p>
+                                        </Button>
                                     </div>
                                     <img
                                         src={selectedPet.images[0].urls.card}
