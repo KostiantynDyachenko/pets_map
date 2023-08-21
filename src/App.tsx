@@ -2,8 +2,9 @@ import React from 'react';
 import {Map, Pet} from './components/Map';
 import {
     QueryClient,
-    QueryClientProvider, useQuery,
+    QueryClientProvider
 } from 'react-query';
+import {usePetQuery} from "./hooks/usePetQuery";
 
 const queryClient = new QueryClient();
 
@@ -24,27 +25,15 @@ const petsData: Array<Pet> = [
             },
         }]
     },
-
 ];
 
 function App() {
 
-    function usePetQuery({location, radius}: { location: { lat: number, lng: number }, radius: number }) {
-        const queryKey = ['pets', location, radius];
-        const fetchPets = async () => {
-            // Fetch pets data using location and radius
-            return fetch('https://jsonplaceholder.typicode.com/todos/1')
-        };
-
-        return useQuery(queryKey, fetchPets);
-    }
 
 
     return (
         <QueryClientProvider client={queryClient}>
-
             <Map pets={petsData} useQuery={usePetQuery}/>
-
         </QueryClientProvider>
 
     );
