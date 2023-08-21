@@ -6,6 +6,7 @@ import ico_field from '../assets/ico_filed.svg'
 import FavoriteButton from './FavoriteButton';
 import PriceButton from './PriceButton';
 import {Button} from "./Button";
+import {locationToString} from "../helpers/locationToString";
 
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
@@ -36,8 +37,11 @@ export const Map = ({
     const [zoom] = useState(14);
     const [center] = useState({lat: 52.5200, lng: 13.4050});
 
-    // @ts-ignore
-    const {isLoading} = useQuery(mapRef.current ? {location: mapRef.current.getCenter(), radius: 5} : {})
+    const {isLoading} = useQuery(mapRef.current ? {
+        // @ts-ignore
+        location: locationToString(mapRef.current.getCenter().lat(), mapRef.current.getCenter().lng()),
+        radius: 5
+    } : {})
 
     const [click, setClick] = useState(false)
 
