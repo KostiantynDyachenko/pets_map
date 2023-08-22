@@ -5,6 +5,7 @@ import {PetInfoWindow} from "./PetInfoWindow";
 import {PetsMarkers} from "./PetsMarkers";
 
 
+
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
 export interface Pet {
@@ -44,6 +45,7 @@ export const Map = ({
     })
 
     const pets: Array<Pet> = data ? data : []
+
 
     const [click, setClick] = useState(false)
 
@@ -93,6 +95,7 @@ export const Map = ({
         drag.current = false
     };
 
+
     const handleCenterChange = () => {
         setCenter(prevState => mapRef.current ? {
             // @ts-ignore
@@ -101,6 +104,7 @@ export const Map = ({
             lng: mapRef.current.getCenter().lng()
         } : prevState)
     }
+
 
     useEffect(() => {
         document.addEventListener('touchstart', handleTouchStart);
@@ -113,7 +117,6 @@ export const Map = ({
             document.removeEventListener('touchend', handleTouchEnd);
         };
     });
-
 
     return (
         <>
@@ -139,6 +142,7 @@ export const Map = ({
                         // @ts-ignore
                         mapRef.current = map
                     }}
+
                 >
                     {isLoading?<div className="absolute top z-50 w-full flex justify-center">
                         <div className='bg-white px-3 py-1 rounded-xl mt-5'>Loading...</div>

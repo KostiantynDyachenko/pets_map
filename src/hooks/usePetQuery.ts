@@ -70,3 +70,4 @@ export const usePetQuery = (data: { location: string, radius: number }) => {
         refetchOnWindowFocus: false,
     });
 }
+
