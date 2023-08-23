@@ -5,7 +5,6 @@ import {PetInfoWindow} from "./PetInfoWindow";
 import {PetsMarkers} from "./PetsMarkers";
 
 
-
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
 export interface Pet {
@@ -34,18 +33,16 @@ export const Map = ({
                     }: { useQuery: any }) => {
     const mapRef = useRef(null);
     const [selectedPet, setSelectedPet] = useState<Pet | null>()
-    const [zoom, setZoom] = useState(14);
+    const [zoom, setZoom] = useState(4);
     const [center, setCenter] = useState({lat: 52.5200, lng: 13.4050});
 
     const {data, isLoading} = useQuery({
         // @ts-ignore
         location: locationToString(center.lat, center.lng),
-        // @ts-ignore
-        radius: zoom
+        radius: 10000 * Math.pow(2, 12 - zoom)
     })
 
     const pets: Array<Pet> = data ? data : []
-
 
     const [click, setClick] = useState(false)
 
@@ -94,8 +91,6 @@ export const Map = ({
     const handleTouchEnd = () => {
         drag.current = false
     };
-
-
     const handleCenterChange = () => {
         setCenter(prevState => mapRef.current ? {
             // @ts-ignore
@@ -104,7 +99,6 @@ export const Map = ({
             lng: mapRef.current.getCenter().lng()
         } : prevState)
     }
-
 
     useEffect(() => {
         document.addEventListener('touchstart', handleTouchStart);
@@ -126,7 +120,7 @@ export const Map = ({
                         gestureHandling: 'greedy',
                         disableDefaultUI: true,
                         streetViewControl: false,
-                        mapTypeId: 'terrain',
+                        mapTypeId: 'roadmap',
                     }}
                     mapContainerStyle={{
                         width: '100%',
@@ -144,11 +138,11 @@ export const Map = ({
                     }}
 
                 >
-                    {isLoading?<div className="absolute top z-50 w-full flex justify-center">
+                    {isLoading ? <div className="absolute top z-50 w-full flex justify-center">
                         <div className='bg-white px-3 py-1 rounded-xl mt-5'>Loading...</div>
-                    </div>:null}
-                    {pets && <PetsMarkers pets={pets} selectedPet={selectedPet} setSelectedPet={setSelectedPet}/>}
-                    {selectedPet && <PetInfoWindow selectedPet={selectedPet} setSelectedPet={setSelectedPet}/>}
+                    </div> : null}
+                    {pets && <PetsMarkers pets={pets} selected={selectedPet} onSelect={(pet) => setSelectedPet(pet)}/>}
+                    {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={()=>setSelectedPet(null)}/>}
                 </GoogleMap>
 
             </LoadScript>
