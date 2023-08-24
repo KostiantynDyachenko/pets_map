@@ -5,6 +5,10 @@ import {PetInfoWindow} from "./PetInfoWindow";
 import {PetsMarkers} from "./PetsMarkers";
 import {Data, Record} from "../types/pet.type";
 import {Loader} from "./Loader";
+import list_ico from '../assets/list_ico.svg'
+import minus from '../assets/minus.svg'
+import plus from '../assets/plus.svg'
+import split from '../assets/split_line.svg'
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
@@ -122,11 +126,29 @@ export const Map = ({
                     {isLoading ? <div className="absolute top z-50 w-full flex justify-center">
                         <Loader/>
                     </div> : null}
+                    <div className='absolute top-8 w-full flex items-end flex-col '>
+                        <div className="w-9 h-16 bg-white flex flex-col rounded-full items-center justify-around mr-8">
+                            <button onClick={() => setZoom(prevState => prevState + 1)}>
+                                <img src={plus} alt="+"/>
+                            </button>
+                            <img src={split} alt="-"/>
+                            <button onClick={() => setZoom(prevState => prevState - 1)}>
+                                <img src={minus} alt="-"/>
+                            </button>
+                        </div>
+
+
+                    </div>
                     {pets && <PetsMarkers pets={pets} selected={selectedPet} onSelect={(pet) => setSelectedPet(pet)}/>}
                     {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={() => setSelectedPet(null)}/>}
                 </GoogleMap>
-
             </LoadScript>
+            <div className='absolute bottom-10 w-full flex justify-center'>
+                <button className="w-40 h-14 bg-[#141416] rounded-xl  flex items-center justify-center">
+                    <p className="text-white font-['Poppins'] text-sm mr-2.5">Show a list</p>
+                    <img src={list_ico} alt={''}/>
+                </button>
+            </div>
         </>
     )
 }
