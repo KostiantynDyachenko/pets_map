@@ -2,32 +2,44 @@ import React, {useMemo} from 'react';
 import {Marker} from "@react-google-maps/api";
 import ico from "../assets/ico.svg";
 import ico_field from "../assets/ico_filed.svg";
-import {Pet} from "./Map";
+import {Data, Record} from "../types/pet.type";
+import {stringToLocation} from "../helpers/locationToString";
+import {PetMarker, PetMarkerField} from "../assets/icons/PetMarker";
 
 export const PetsMarkers = ({
                                 pets,
                                 selected,
                                 onSelect
-                            }: { pets: Array<Pet>, selected?: Pet | null, onSelect: (pet: Pet | null) => void }) => {
-
+                            }: { pets: Data, selected?: Record | null, onSelect: (pet: Record | null) => void }) => {
 
     return useMemo(() => {
 
-        const handleSelectMarker = (pet: Pet) => {
+        const handleSelectMarker = (pet: Record | null) => {
             onSelect(pet)
+        }
+        const handleIcoChange = (count: number, isSelected: any): string => {
+            if (count > 1 && isSelected) {
+                return `data:image/svg+xml;charset=UTF-8;base64,${btoa(PetMarkerField(count))}`
+            }
+            if (count > 1) {
+                return `data:image/svg+xml;charset=UTF-8;base64,${btoa(PetMarker(count))}`
+            }
+            if (isSelected) {
+                return ico
+            }
+            return ico_field
         }
 
         return (
             <>
-                {pets.map((pet: Pet) => (
+                {pets.map((record: Record) => (
                     <Marker
                         icon={{
-                            url: pet.id === selected?.id ? ico : ico_field,
-                            scale: 7
+                            url: handleIcoChange(record.pets.length, selected?.location === record.location)
                         }}
-                        key={pet.id}
-                        position={{lat: pet.location[0], lng: pet.location[1]}}
-                        onClick={() => handleSelectMarker(pet)}
+                        key={record.location}
+                        position={stringToLocation(record.location)}
+                        onClick={() => handleSelectMarker(!selected ? record : null)}
                     >
                     </Marker>
                 ))}

@@ -3,36 +3,17 @@ import {GoogleMap, LoadScript} from '@react-google-maps/api';
 import {locationToString} from "../helpers/locationToString";
 import {PetInfoWindow} from "./PetInfoWindow";
 import {PetsMarkers} from "./PetsMarkers";
-
+import {Data, Record} from "../types/pet.type";
+import {Loader} from "./Loader";
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
-
-export interface Pet {
-    id: string,
-    name: string,
-    breed: {
-        name: string,
-    },
-    price: number,
-    pricingType: string,
-    location: [number, number],
-    images: Array<{
-        id: string,
-        urls: {
-            card: string,
-        }
-    }>
-    contract: {
-        name: string
-    }
-}
 
 const defCenter = {lat: 52.5200, lng: 13.4050}
 export const Map = ({
                         useQuery
                     }: { useQuery: any }) => {
     const mapRef = useRef(null);
-    const [selectedPet, setSelectedPet] = useState<Pet | null>()
+    const [selectedPet, setSelectedPet] = useState<Record | null>()
     const [zoom, setZoom] = useState(4);
     const [center, setCenter] = useState({lat: 52.5200, lng: 13.4050});
 
@@ -42,7 +23,7 @@ export const Map = ({
         radius: 10000 * Math.pow(2, 12 - zoom)
     })
 
-    const pets: Array<Pet> = data ? data : []
+    const pets: Data = data ? data : []
 
     const [click, setClick] = useState(false)
 
@@ -139,10 +120,10 @@ export const Map = ({
 
                 >
                     {isLoading ? <div className="absolute top z-50 w-full flex justify-center">
-                        <div className='bg-white px-3 py-1 rounded-xl mt-5'>Loading...</div>
+                        <Loader/>
                     </div> : null}
                     {pets && <PetsMarkers pets={pets} selected={selectedPet} onSelect={(pet) => setSelectedPet(pet)}/>}
-                    {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={()=>setSelectedPet(null)}/>}
+                    {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={() => setSelectedPet(null)}/>}
                 </GoogleMap>
 
             </LoadScript>

@@ -18,7 +18,6 @@ module.exports = {
         customGray: '#777E90',
         neutrals: '#23262F',
         neutrals2: '#FCFCFD'
-
       },
       spacing: {
         '7.5': '1.875rem',
@@ -31,6 +30,14 @@ module.exports = {
       fontFamily: {
         'sans': ['Poppins',  ...defaultTheme.fontFamily.sans]
       },
+      keyframes: {
+        pulseSize: {
+          '0%': { width: '0.25rem' },
+          '50%': { width: '0.5rem' },
+          '100%': { width: '0.75rem' },
+        }
+      }
+
     },
   },
   plugins: [],
