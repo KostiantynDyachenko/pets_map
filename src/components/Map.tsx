@@ -5,7 +5,6 @@ import {PetInfoWindow} from "./PetInfoWindow";
 import {PetsMarkers} from "./PetsMarkers";
 import {Data, Record} from "../types/pet.type";
 import {Loader} from "./Loader";
-import list_ico from '../assets/list_ico.svg'
 import minus from '../assets/minus.svg'
 import plus from '../assets/plus.svg'
 import split from '../assets/split_line.svg'
@@ -14,6 +13,8 @@ import {Modal} from "./Modal";
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
 const defCenter = {lat: 52.5200, lng: 13.4050}
+const {innerWidth: width, innerHeight: height} = window;
+
 export const Map = ({
                         useQuery
                     }: { useQuery: any }) => {
@@ -26,15 +27,14 @@ export const Map = ({
     const {data, isLoading, refetch} = useQuery({
         // @ts-ignore
         location: locationToString(center.lat, center.lng),
-        radius: 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom)
+        radius: 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom) * Math.max(width, height) / 2
     })
-
+    // eslint-disable-next-line
     const pets: Data = data ? data : []
-
 
     useEffect(() => {
         if (pets.length === 0 && !isLoading) setModalVisible(true)
-    }, [pets]);
+    }, [pets, isLoading]);
 
     const handleModalSubmit = () => {
         setModalVisible(false)
@@ -51,7 +51,7 @@ export const Map = ({
 
         if (drag.current) {
             if (prevY.current - e.touches[0].clientY > 1.5) {
-                if (speedUp.current > 5) {
+                if (speedUp.current > 15) {
                     // @ts-ignore
                     mapRef.current.setZoom(Math.min(mapRef.current.zoom + 1, 20))
                     speedUp.current = 0
@@ -61,7 +61,7 @@ export const Map = ({
 
             } else if (prevY.current - e.touches[0].clientY < -1.5) {
 
-                if (speedDown.current > 5) {
+                if (speedDown.current > 15) {
                     // @ts-ignore
                     mapRef.current.setZoom(Math.max(mapRef.current.zoom - 1, 1))
                     speedDown.current = 0

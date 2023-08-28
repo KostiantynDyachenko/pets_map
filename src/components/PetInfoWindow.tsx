@@ -5,6 +5,7 @@ import FavoriteButton from "./FavoriteButton";
 import PriceButton from "./PriceButton";
 import {Record} from "../types/pet.type";
 import {stringToLocation} from "../helpers/locationToString";
+import {Link} from "react-router-dom";
 
 export const PetInfoWindow = ({
                                   selectedPet,
@@ -20,7 +21,7 @@ export const PetInfoWindow = ({
         >
             <div className="p-2 bg-white rounded-3xl max-h-60 w-80">
                 {selectedPet.pets.map((pet) =>
-                    <a href={'#'} key={pet.id} className='flex items-center justify-between cursor-default group rounded-xl hover:bg-gray-50'>
+                    <Link to={'/'} key={pet.id} className='flex items-center justify-between cursor-default group rounded-xl hover:bg-gray-50'>
                         <div className='flex items-center'>
                             <img className="w-12 h-12 object-cover rounded-lg m-0.5" src={pet.images[0].urls.card}
                                  alt={pet.name}/>
@@ -29,7 +30,7 @@ export const PetInfoWindow = ({
                         <div className={'mr-3'}>
                             <PriceButton price={pet.price} pricingType={pet.pricingType}/>
                         </div>
-                    </a>
+                    </Link>
                 )
                 }
             </div>
