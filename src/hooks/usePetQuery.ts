@@ -157,7 +157,7 @@ const petsData: Data = [
                 id: '1',
                 name: 'Buddy',
                 breed: {
-                    name: 'Dog',
+                    name: 'Labrador',
                 },
                 price: 100,
                 pricingType: 'money',
@@ -177,12 +177,10 @@ const petsData: Data = [
 ];
 export const queryFunc = async ({location, radius}: { location: string, radius: number }) => {
     // Fetch pets data using location and radius
-    // simulating request on server for testing
-    if (radius === 15) {
+    // simulating empty location
+    if (radius < 1500 && location.slice(0, 2)==='52') {
         return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve([petsData[0]]);
-            }, 1000);
+            resolve([]);
         });
     }
 

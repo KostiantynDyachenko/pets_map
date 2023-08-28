@@ -65,7 +65,6 @@ export const PetInfoWindow = ({
                     <div>
                         <h2 className="mb-1 text-base font-semibold">{selectedPet.pets[0].name}</h2>
                         <p className="text-sm font-medium text-customGray">{selectedPet.pets[0].breed.name}</p>
-                        <p className="text-sm font-medium text-customGray">{selectedPet.pets[0].breed.name}</p>
                     </div>
                     <PriceButton price={selectedPet.pets[0].price} pricingType={selectedPet.pets[0].pricingType}/>
                 </div>

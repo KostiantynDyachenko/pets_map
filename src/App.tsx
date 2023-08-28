@@ -12,7 +12,6 @@ const queryClient = new QueryClient();
 function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <p>qwe</p>
             <div className='absolute top-0 left-0 w-full h-screen px-5 py-8 overflow-hidden bg-neutral-900/70 sm:p-10'>
                 <div className='w-full h-full overflow-hidden rounded-3xl'>
                     <Map useQuery={usePetQuery}/>

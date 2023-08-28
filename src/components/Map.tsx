@@ -9,6 +9,7 @@ import list_ico from '../assets/list_ico.svg'
 import minus from '../assets/minus.svg'
 import plus from '../assets/plus.svg'
 import split from '../assets/split_line.svg'
+import {Modal} from "./Modal";
 
 const google_api = 'AIzaSyD7u-mIFJZVbQ-20sNfrABECqJbgTvNxr8'
 
@@ -20,8 +21,9 @@ export const Map = ({
     const [selectedPet, setSelectedPet] = useState<Record | null>()
     const [zoom, setZoom] = useState(4);
     const [center, setCenter] = useState({lat: 52.5200, lng: 13.4050});
+    const [isModalVisible, setModalVisible] = useState(false);
 
-    const {data, isLoading} = useQuery({
+    const {data, isLoading, refetch} = useQuery({
         // @ts-ignore
         location: locationToString(center.lat, center.lng),
         radius: 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom)
@@ -29,6 +31,15 @@ export const Map = ({
 
     const pets: Data = data ? data : []
 
+
+    useEffect(() => {
+        if (pets.length === 0 && !isLoading) setModalVisible(true)
+    }, [pets]);
+
+    const handleModalSubmit = () => {
+        setModalVisible(false)
+        refetch()
+    }
     const [click, setClick] = useState(false)
 
     const drag = useRef(false);
@@ -135,9 +146,8 @@ export const Map = ({
                                 <img src={minus} alt="-"/>
                             </button>
                         </div>
-
-
                     </div>
+                    <Modal isOpen={isModalVisible} onSubmit={handleModalSubmit}/>
                     {pets && <PetsMarkers pets={pets} selected={selectedPet} onSelect={(pet) => setSelectedPet(pet)}/>}
                     {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={() => setSelectedPet(null)}/>}
                 </GoogleMap>
