@@ -24,7 +24,7 @@ export const Map = ({
     const {data, isLoading} = useQuery({
         // @ts-ignore
         location: locationToString(center.lat, center.lng),
-        radius: 10000 * Math.pow(2, 12 - zoom)
+        radius: 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom)
     })
 
     const pets: Data = data ? data : []
@@ -109,7 +109,7 @@ export const Map = ({
                     }}
                     mapContainerStyle={{
                         width: '100%',
-                        height: '100vh'
+                        height: '100%'
                     }}
                     zoom={zoom}
                     center={defCenter}
@@ -121,13 +121,12 @@ export const Map = ({
                         // @ts-ignore
                         mapRef.current = map
                     }}
-
                 >
-                    {isLoading ? <div className="absolute top z-50 w-full flex justify-center">
+                    {isLoading ? <div className="absolute z-50 flex justify-center w-full top">
                         <Loader/>
                     </div> : null}
-                    <div className='absolute top-8 w-full flex items-end flex-col '>
-                        <div className="w-9 h-16 bg-white flex flex-col rounded-full items-center justify-around mr-8">
+                    <div className='absolute flex flex-col items-end w-full top-8'>
+                        <div className="flex flex-col items-center justify-around h-16 mr-8 bg-white rounded-full w-9">
                             <button onClick={() => setZoom(prevState => prevState + 1)}>
                                 <img src={plus} alt="+"/>
                             </button>
@@ -143,12 +142,6 @@ export const Map = ({
                     {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={() => setSelectedPet(null)}/>}
                 </GoogleMap>
             </LoadScript>
-            <div className='absolute bottom-10 w-full flex justify-center'>
-                <button className="w-40 h-14 bg-[#141416] rounded-xl  flex items-center justify-center">
-                    <p className="text-white font-['Poppins'] text-sm mr-2.5">Show a list</p>
-                    <img src={list_ico} alt={''}/>
-                </button>
-            </div>
         </>
     )
 }

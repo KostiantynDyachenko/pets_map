@@ -18,18 +18,18 @@ export const PetInfoWindow = ({
                             closeBoxURL: '',
                         }}
         >
-            <div className="bg-white rounded-3xl max-h-60 w-80 p-2">
+            <div className="p-2 bg-white rounded-3xl max-h-60 w-80">
                 {selectedPet.pets.map((pet) =>
-                    <div key={pet.id} className='group flex items-center justify-between cursor-default rounded-xl hover:bg-[#F4F5F6]'>
+                    <a href={'#'} key={pet.id} className='flex items-center justify-between cursor-default group rounded-xl hover:bg-gray-50'>
                         <div className='flex items-center'>
-                            <img className="w-12 h-12 m-0 object-cover rounded-lg m-0.5" src={pet.images[0].urls.card}
+                            <img className="w-12 h-12 object-cover rounded-lg m-0.5" src={pet.images[0].urls.card}
                                  alt={pet.name}/>
-                            <h2 className="font-['Poppins'] font-medium text-base ml-2.5 text-customGray group-hover:text-[#141416] group-hover:font-semibold">{pet.name}</h2>
+                            <h2 className="font-medium text-base ml-2.5 text-customGray group-hover:text-neutral-900 group-hover:font-semibold">{pet.name}</h2>
                         </div>
                         <div className={'mr-3'}>
                             <PriceButton price={pet.price} pricingType={pet.pricingType}/>
                         </div>
-                    </div>
+                    </a>
                 )
                 }
             </div>
@@ -41,16 +41,16 @@ export const PetInfoWindow = ({
             position={stringToLocation(selectedPet.location)}
             onCloseClick={onClose}
         >
-            <div className="bg-white h-80 w-64 rounded-3xl">
+            <div className="w-64 bg-white h-80 min-w-64 rounded-3xl">
                 <button onClick={onClose}
-                        className='absolute bg-white bg-opacity-30 rounded-full top-4 left-4 w-6 h-6 flex justify-center items-center'>
+                        className='absolute flex items-center justify-center w-6 h-6 bg-white rounded-full bg-opacity-30 top-4 left-4'>
                     <img src={cross} alt=""/>
                 </button>
-                <div className='absolute top-4 right-4 flex flex-col items-end space-y-2'>
+                <div className='absolute flex flex-col items-end top-4 right-4'>
                     <FavoriteButton data={selectedPet} isWhite={true}/>
                     <div
-                        className={'bg-gray-50 h-8 w-10 flex items-center ' +
-                            'justify-center rounded font-bold font-[\'Poppins\'] ' +
+                        className={'bg-customGreenDark text-white h-8 w-10 flex items-center ' +
+                            'justify-center rounded font-bold mt-4 ' +
                             'text-neutrals text-xs'}>
                         {selectedPet.pets[0].contract.name}
                     </div>
@@ -58,13 +58,14 @@ export const PetInfoWindow = ({
                 <img
                     src={selectedPet.pets[0].images[0].urls.card}
                     alt={selectedPet.pets[0].name}
-                    className="w-full h-80 m-0 object-cover"
+                    className="object-cover w-full m-0 h-80"
                 />
                 <div
-                    className='flex justify-between items-center rounded-t-xl bg-white absolute bottom-0 w-full p-4'>
+                    className='absolute bottom-0 flex items-center justify-between w-full p-4 bg-white rounded-t-xl'>
                     <div>
-                        <h2 className="font-semibold font-['Poppins'] text-base mb-1">{selectedPet.pets[0].name}</h2>
-                        <p className="font-medium font-['Poppins'] text-customGray text-sm">{selectedPet.pets[0].breed.name}</p>
+                        <h2 className="mb-1 text-base font-semibold">{selectedPet.pets[0].name}</h2>
+                        <p className="text-sm font-medium text-customGray">{selectedPet.pets[0].breed.name}</p>
+                        <p className="text-sm font-medium text-customGray">{selectedPet.pets[0].breed.name}</p>
                     </div>
                     <PriceButton price={selectedPet.pets[0].price} pricingType={selectedPet.pets[0].pricingType}/>
                 </div>

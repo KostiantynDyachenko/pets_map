@@ -28,7 +28,8 @@ module.exports = {
         '175': '43.75rem',
       },
       fontFamily: {
-        'sans': ['Poppins',  ...defaultTheme.fontFamily.sans]
+        'sans': ['Poppins', 'sans-serif'],
+        'poppins': ['Poppins']
       },
       keyframes: {
         pulseSize: {
