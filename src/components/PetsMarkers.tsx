@@ -9,8 +9,9 @@ import {PetMarker, PetMarkerField} from "../assets/icons/PetMarker";
 export const PetsMarkers = ({
                                 pets,
                                 selected,
-                                onSelect
-                            }: { pets: Data, selected?: Record | null, onSelect: (pet: Record | null) => void }) => {
+                                onSelect,
+    zoom
+                            }: { pets: Data, selected?: Record | null, onSelect: (pet: Record | null) => void, zoom: number }) => {
 
     return useMemo(() => {
 
@@ -35,7 +36,9 @@ export const PetsMarkers = ({
                 {pets.map((record: Record) => (
                     <Marker
                         icon={{
-                            url: handleIcoChange(record.pets.length, selected?.location === record.location)
+                            url: handleIcoChange(record.pets.length, selected?.location === record.location),
+                            //scaledSize: new google.maps.Size(Math.min(zoom*10, 80), Math.min(zoom*10,90)),
+                            anchor: new window.google.maps.Point(10, 30)
                         }}
                         key={record.location}
                         position={stringToLocation(record.location)}

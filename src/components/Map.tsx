@@ -40,53 +40,53 @@ export const Map = ({
         setModalVisible(false)
         refetch()
     }
-    const [click, setClick] = useState(false)
+    // const [click, setClick] = useState(false)
+    //
+    // const drag = useRef(false);
+    // const prevY = useRef(0);
+    // const speedUp = useRef(0);
+    // const speedDown = useRef(0);
 
-    const drag = useRef(false);
-    const prevY = useRef(0);
-    const speedUp = useRef(0);
-    const speedDown = useRef(0);
-
-    const handleTouchMove = (e: any) => {
-
-        if (drag.current) {
-            if (prevY.current - e.touches[0].clientY > 1.5) {
-                if (speedUp.current > 15) {
-                    // @ts-ignore
-                    mapRef.current.setZoom(Math.min(mapRef.current.zoom + 1, 20))
-                    speedUp.current = 0
-                } else {
-                    speedUp.current += 1
-                }
-
-            } else if (prevY.current - e.touches[0].clientY < -1.5) {
-
-                if (speedDown.current > 15) {
-                    // @ts-ignore
-                    mapRef.current.setZoom(Math.max(mapRef.current.zoom - 1, 1))
-                    speedDown.current = 0
-                } else {
-                    speedDown.current += 1
-                }
-            }
-        }
-        prevY.current = e.touches[0].clientY
-
-    };
-    const handleTouchStart = (e: any) => {
-
-        if (e.touches.length < 2) {
-            if (click) {
-                drag.current = true
-            } else {
-                setClick(true)
-                setTimeout(() => setClick(false), 200)
-            }
-        }
-    };
-    const handleTouchEnd = () => {
-        drag.current = false
-    };
+    // const handleTouchMove = (e: any) => {
+    //
+    //     if (drag.current) {
+    //         if (prevY.current - e.touches[0].clientY > 1.5) {
+    //             if (speedUp.current > 15) {
+    //                 // @ts-ignore
+    //                 mapRef.current.setZoom(Math.min(mapRef.current.zoom + 1, 20))
+    //                 speedUp.current = 0
+    //             } else {
+    //                 speedUp.current += 1
+    //             }
+    //
+    //         } else if (prevY.current - e.touches[0].clientY < -1.5) {
+    //
+    //             if (speedDown.current > 15) {
+    //                 // @ts-ignore
+    //                 mapRef.current.setZoom(Math.max(mapRef.current.zoom - 1, 1))
+    //                 speedDown.current = 0
+    //             } else {
+    //                 speedDown.current += 1
+    //             }
+    //         }
+    //     }
+    //     prevY.current = e.touches[0].clientY
+    //
+    // };
+    // const handleTouchStart = (e: any) => {
+    //
+    //     if (e.touches.length < 2) {
+    //         if (click) {
+    //             drag.current = true
+    //         } else {
+    //             setClick(true)
+    //             setTimeout(() => setClick(false), 200)
+    //         }
+    //     }
+    // };
+    // const handleTouchEnd = () => {
+    //     drag.current = false
+    // };
     const handleCenterChange = () => {
         setCenter(prevState => mapRef.current ? {
             // @ts-ignore
@@ -96,17 +96,17 @@ export const Map = ({
         } : prevState)
     }
 
-    useEffect(() => {
-        document.addEventListener('touchstart', handleTouchStart);
-        document.addEventListener('touchmove', handleTouchMove);
-        document.addEventListener('touchend', handleTouchEnd);
-
-        return () => {
-            document.removeEventListener('touchstart', handleTouchStart);
-            document.removeEventListener('touchmove', handleTouchMove);
-            document.removeEventListener('touchend', handleTouchEnd);
-        };
-    });
+    // useEffect(() => {
+    //     document.addEventListener('touchstart', handleTouchStart);
+    //     document.addEventListener('touchmove', handleTouchMove);
+    //     document.addEventListener('touchend', handleTouchEnd);
+    //
+    //     return () => {
+    //         document.removeEventListener('touchstart', handleTouchStart);
+    //         document.removeEventListener('touchmove', handleTouchMove);
+    //         document.removeEventListener('touchend', handleTouchEnd);
+    //     };
+    // });
 
     return (
         <>
@@ -148,7 +148,7 @@ export const Map = ({
                         </div>
                     </div>
                     <Modal isOpen={isModalVisible} onSubmit={handleModalSubmit}/>
-                    {pets && <PetsMarkers pets={pets} selected={selectedPet} onSelect={(pet) => setSelectedPet(pet)}/>}
+                    {pets && <PetsMarkers zoom={zoom} pets={pets} selected={selectedPet} onSelect={(pet) => setSelectedPet(pet)}/>}
                     {selectedPet && <PetInfoWindow selectedPet={selectedPet} onClose={() => setSelectedPet(null)}/>}
                 </GoogleMap>
             </LoadScript>
