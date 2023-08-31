@@ -27,7 +27,7 @@ export const Map = ({
     const {data, isLoading, refetch} = useQuery({
         // @ts-ignore
         location: locationToString(center.lat, center.lng),
-        radius: 156543.03392 * Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom) * Math.max(width, height) / 2
+        radius: Math.cos(center.lat * Math.PI / 180) / Math.pow(2, zoom) * Math.max(width, height) / 2
     })
     // eslint-disable-next-line
     const pets: Data = data ? data : []

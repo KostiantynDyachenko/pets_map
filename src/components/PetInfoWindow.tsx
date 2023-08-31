@@ -15,9 +15,12 @@ export const PetInfoWindow = ({
     if (selectedPet.pets.length > 1) {
         return <InfoBox position={new google.maps.LatLng(stringToLocation(selectedPet.location))}
                         onCloseClick={onClose}
+
                         options={{
                             closeBoxURL: '',
+                            pixelOffset: new window.google.maps.Size(-20, 45)
                         }}
+
         >
             <div className="p-2 bg-white rounded-3xl max-h-60 w-80">
                 {selectedPet.pets.map((pet) =>

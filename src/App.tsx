@@ -7,6 +7,8 @@ import {
 import {usePetQuery} from "./hooks/usePetQuery";
 import list_ico from "./assets/list_ico.svg";
 import {BrowserRouter as Router} from 'react-router-dom';
+import {CountryDropDown} from "./components/CountryDropDown";
+
 
 const queryClient = new QueryClient();
 
@@ -15,6 +17,9 @@ function App() {
 
         <QueryClientProvider client={queryClient}>
             <Router>
+                <div className='absolute top-5 right-10 z-50'>
+                    <CountryDropDown/>
+                </div>
                 <div
                     className='absolute top-0 left-0 w-full h-screen px-5 py-8 overflow-hidden bg-neutral-900/70 sm:p-10'>
                     <div className='w-full h-full overflow-hidden rounded-3xl'>

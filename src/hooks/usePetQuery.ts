@@ -178,8 +178,7 @@ const petsData: Data = [
 export const queryFunc = async ({location, radius}: { location: string, radius: number }) => {
     // Fetch pets data using location and radius
     // simulating empty location
-
-    if (radius < 6000 && location.slice(0, 2)==='52') {
+    if (radius < 0.22 && location.slice(0, 2)==='52') {
         return new Promise((resolve) => {
             resolve([]);
         });
