@@ -122,3 +122,19 @@
         box-shadow: 10014px 0 0 -5px;
     }
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #F4F4F4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #141416;
+    border-radius: 20px;
+}

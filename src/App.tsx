@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Map} from './components/Map';
 import {
     QueryClient,
@@ -8,18 +8,79 @@ import {usePetQuery} from "./hooks/usePetQuery";
 import list_ico from "./assets/list_ico.svg";
 import {BrowserRouter as Router} from 'react-router-dom';
 import {CountryDropDown} from "./components/CountryDropDown";
+import Czechia from "./assets/countries/Czechia.svg";
+import Poland from "./assets/countries/Poland.svg";
+import Deutschland from "./assets/countries/Deutschland.svg";
 
 
 const queryClient = new QueryClient();
+const mockCurrency = [
+    {
+        name: 'Kč (Czech koruna)',
+        icon: Czechia,
+    },
+    {
+        name: 'zł (Polish złoty)',
+        icon: Poland,
+    },
+    {
+        name: 'Euro',
+        icon: Deutschland,
+    },
+]
+
+const mockCountry = [
+    {
+        name: 'Czechia',
+        icon: Czechia,
+    },
+    {
+        name: 'Polish',
+        icon: Poland,
+    },
+    {
+        name: 'Deutschland',
+        icon: Deutschland,
+    },
+]
 
 function App() {
-    return (
 
+    const [currencyIsOpen, setCurrencyIsOpen] = useState(false);
+    const [countryIsOpen, setCountryIsOpen] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState(mockCountry[0]);
+    const [selectedCurrency, setSelectedCurrency] = useState(mockCurrency[0]);
+
+    const handleCountryOpen = (isOpen: boolean) => {
+        setCountryIsOpen(isOpen)
+        setCurrencyIsOpen(false)
+    }
+
+    const handleCurrencyOpen = (isOpen: boolean) => {
+        setCurrencyIsOpen(isOpen)
+        setCountryIsOpen(false)
+    }
+
+    return (
         <QueryClientProvider client={queryClient}>
             <Router>
-                <div className='absolute top-5 right-10 z-50'>
-                    <CountryDropDown/>
+                <div className='absolute z-50 top-2 right-10'>
+                    <CountryDropDown data={mockCurrency}
+                                     isOpen={currencyIsOpen}
+                                     onOpen={handleCurrencyOpen}
+                                     selected={selectedCurrency}
+                                     onSelect={setSelectedCurrency}
+                                    className={'mr-4'}
+                    />
+                    <CountryDropDown data={mockCountry}
+                                     type={'country'}
+                                     isOpen={countryIsOpen}
+                                     onOpen={handleCountryOpen}
+                                     selected={selectedCountry}
+                                     onSelect={setSelectedCountry}
+                    />
                 </div>
+
                 <div
                     className='absolute top-0 left-0 w-full h-screen px-5 py-8 overflow-hidden bg-neutral-900/70 sm:p-10'>
                     <div className='w-full h-full overflow-hidden rounded-3xl'>
