@@ -36,7 +36,7 @@ export const CountryDropDown = ({
             </div>
             {isOpen ? <div
                 className={'origin-top-right absolute right-0 mt-2 p-4 shadow-lg bg-white rounded-3xl '}>
-                <div className='bg-white w-3.5 h-3.5 absolute top-[-4px] right-10 rotate-45 rounded'></div>
+                <div className='bg-white w-3.5 h-3.5 absolute -top-1 right-10 rotate-45 rounded'></div>
                 <div className={'max-h-72 overflow-y-auto'}>
                     {data.map((country) => {
                         return <div
